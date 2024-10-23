@@ -370,7 +370,7 @@ const Sub_Sub_Categories = () => {
                       {/* {console.log("sucbcategories----------",subSubCategories)} */}
                       <td>{subSubCategory.mainCategory?.name || "N/A"}</td>
                       <td>{subSubCategory.subCategory?.name || "N/A"}</td>
-                      <td>{subSubCategory?.priorit || "0"}</td>
+                      <td>{subSubCategory?.priority || "0"}</td>
                       <td className="text-center">
                         {/* <ActionButton
                           to={`/edit-sub-sub-category/${subSubCategory._id}`}

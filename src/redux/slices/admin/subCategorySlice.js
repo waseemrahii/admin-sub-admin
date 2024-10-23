@@ -47,7 +47,7 @@ export const fetchSubCategoryById = createAsyncThunk(
 // Create subcategory
 export const createSubCategory = createAsyncThunk(
   'subCategory/createSubCategory',
-  async (subCategoryData, { rejectWithValue }) => {
+  async ({subCategoryData}, { rejectWithValue }) => {
     try {
       const { token } = getAuthData(); // Get token for authorization
       const response = await axiosInstance.post(API_URL, subCategoryData, {

@@ -105,6 +105,7 @@ export const toggleFeatured = createAsyncThunk(
   async ({ productId, isFeatured }, { rejectWithValue }) => {
     try {
       const { token } = getAuthData(); // Get the token for authorization
+      // console.log("proudct id and is featured", productId, isFeatured);
       const response = await axiosInstance.put(`${API_URL}/${productId}/feature`, { isFeatured }, {
         headers: {
           Authorization: `Bearer ${token}`

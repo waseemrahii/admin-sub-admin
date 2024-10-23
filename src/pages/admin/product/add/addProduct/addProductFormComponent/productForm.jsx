@@ -11,7 +11,7 @@ const ProductForm = ({
 }) => {
   return (
     <div>
-      <FormSection title="Update Product">
+      <FormSection title="Add Product">
         <FormInput
           label="Product Name"
           name="name"
