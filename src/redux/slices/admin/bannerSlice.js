@@ -48,19 +48,17 @@ export const createBanner = createAsyncThunk(
 // Update banner
 export const updateBanner = createAsyncThunk(
   'banner/updateBanner',
-  async ({ bannerId, bannerData }, { rejectWithValue }) => {
+  async ({ bannerId, status }, { rejectWithValue }) => {
     try {
       const { token } = getAuthData(); // Retrieve token for authorization
-      const formData = new FormData();
-      for (const key in bannerData) {
-        formData.append(key, bannerData[key]);
-      }
-      const response = await axiosInstance.put(`${API_URL}/${bannerId}`, formData, {
+       console.log(bannerId, status);
+       console.log(" status ===",status);
+      const response = await axiosInstance.put(`${API_URL}/${bannerId}`, { publish: status }, {
         headers: {
-          'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
         },
       });
+      consol.log("update banner response ===",response.data.doc);
       return response.data.doc; // Assuming the response contains the updated banner
     } catch (error) {
       return rejectWithValue(ErrorMessage(error));
@@ -74,7 +72,7 @@ export const updateBannerStatus = createAsyncThunk(
   async ({ bannerId, status }, { rejectWithValue }) => {
     try {
       const { token } = getAuthData(); // Retrieve token for authorization
-      const response = await axiosInstance.patch(`${API_URL}/${bannerId}/publish`, { publish: status }, {
+      const response = await axiosInstance.put(`${API_URL}/publish/${bannerId}`, { publish: status }, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

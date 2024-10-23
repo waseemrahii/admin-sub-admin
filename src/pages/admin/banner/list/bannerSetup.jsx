@@ -7,6 +7,7 @@ import {
   deleteBanner,
   fetchBanners,
   updateBannerStatus,
+  updateBanner
 } from "../../../../redux/slices/admin/bannerSlice";
 import ConfirmationModal from "../../../../components/FormInput/ConfirmationModal";
 import Switcher from "../../../../components/FormInput/Switcher";
@@ -27,16 +28,20 @@ const BannerSetup = () => {
   }, [dispatch]);
 
   const handleUpdateStatus = (id, currentStatus) => {
-    const newStatus = currentStatus ? "unpublish" : "publish";
+    const newStatus = currentStatus ? "true" : "false";
 
     ConfirmationModal({
       title: "Are you sure?",
       text: `Do you want to ${newStatus} this banner?`,
     }).then((willUpdate) => {
       if (willUpdate) {
-        dispatch(updateBannerStatus({ bannerId: id, status: !currentStatus }))
-          .then(() => toast.success(`Banner status updated to ${newStatus}!`))
-          .catch(() => toast.error("Failed to update banner status."));
+        dispatch(updateBanner({ bannerId: id, status: !currentStatus }))
+          .then(() => {
+            toast.success(`Banner status updated to ${newStatus}!`);
+            // Fetch the updated banners to refresh the data
+            dispatch(fetchBanners());
+          })
+          .catch(() => console.log("Failed to update banner status."));
       } else {
         toast.info("Status update canceled.");
       }
@@ -79,12 +84,12 @@ const BannerSetup = () => {
     },
     { key: "bannerType", label: "Banner Type" },
     {
-      key: "published",
+      key: "publish",
       label: "Published",
       render: (banner) => (
         <Switcher
-          checked={banner.published}
-          onChange={() => handleUpdateStatus(banner._id, banner.published)}
+          checked={banner.publish}
+          onChange={() => handleUpdateStatus(banner._id, banner.publish)}
         />
       ),
     },

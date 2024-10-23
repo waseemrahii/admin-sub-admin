@@ -195,7 +195,7 @@ const FileUpload = ({ label, ratio, image, onChange, onDelete, isThumbnail }) =>
             <div className="position-absolute h-100 top-0 w-100 d-flex align-content-center justify-content-center">
               <div className="d-flex flex-column justify-content-center align-items-center">
                 <img
-                  src="https://6valley.6amtech.com/public/assets/back-end/img/icons/product-upload-icon.svg"
+                  src="/product-upload-icon.svg"
                   alt="Upload"
                   className="w-75"
                 />

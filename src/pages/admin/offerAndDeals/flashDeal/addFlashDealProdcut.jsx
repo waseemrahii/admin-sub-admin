@@ -70,7 +70,7 @@ const flashDeal = flashDeals.find((deal) => deal._id === id); // Assuming 'id' i
       dispatch(addProductToFlashDeal({ id: id, productId: selectedProduct._id }))
         .then(() => {
           toast.success("Product added successfully.");
-          fetchFlashDealById(id);  
+          dispatch(fetchFlashDealById(id));  
 
         })
         .catch((error) => {
@@ -129,7 +129,7 @@ const flashDeal = flashDeals.find((deal) => deal._id === id); // Assuming 'id' i
                       <div ref={dropdownRef} className="relative">
                         <button
                           type="button"
-                          className="w-full bg-gray-200 text-left p-2 rounded-lg focus:outline-none"
+                          className="w-full bg-white-200 border text-left p-2 rounded-lg focus:outline-none"
                           onClick={toggleDropdown}
                         >
                           {selectedProduct ? selectedProduct.name : "Select product"}
@@ -137,7 +137,7 @@ const flashDeal = flashDeals.find((deal) => deal._id === id); // Assuming 'id' i
                         {dropdownOpen && (
                           <div className="absolute z-10 w-full bg-white border border-gray-300 mt-1 rounded-lg shadow-lg">
                             <div className="flex items-center p-2">
-                              <button type="button" className="text-gray-500">
+                              <button type="button" className="">
                                 <AiOutlineSearch />
                               </button>
                               <input
@@ -180,7 +180,8 @@ const flashDeal = flashDeals.find((deal) => deal._id === id); // Assuming 'id' i
                   <button
                     type="submit"
                     className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-                  >
+                  style={{color: "white", fontWeight: "bold"}}
+                 >
                     Add
                   </button>
                 </div>

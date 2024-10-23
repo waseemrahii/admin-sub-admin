@@ -4,9 +4,15 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ApiUrl from '../../../../ApiUrl';
 import PreviewImage from '../../../../components/FormInput/PreviewImage';
 import FileUpload from '../../../../components/FormInput/FileUpload';
+import apiConfig from '../../../../config/apiConfig';
+import { getAuthData } from '../../../../utils/authHelper';
+
+const MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2MB
+
+const ApiUrl = `${apiConfig.admin}`;
+const ApiUrls = `${apiConfig.seller}`;
 
 const AddBannerForm = () => {
     const [bannerType, setBannerType] = useState('Main Section Banner');
@@ -18,21 +24,24 @@ const AddBannerForm = () => {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [brands, setBrands] = useState([]);
-    const [token, setToken] = useState(''); 
+    const [token, setToken] = useState('');
+
     useEffect(() => {
         // Retrieve token from local storage
-        const storedToken = localStorage.getItem('token');
-        setToken(storedToken);
+        const { token } = getAuthData();
+        setToken(token);
 
         const fetchData = async () => {
             try {
                 const endpoints = {
-                    product: `${ApiUrl}/vi/admin/products/`,
-                    category: `${ApiUrl}categories/`,
-                    brand: `${ApiUrl}brands/`
+                    product: `${ApiUrls}/products/`,
+                    category: `${ApiUrl}/categories/`,
+                    brand: `${ApiUrl}/brands/`
                 };
 
-                const response = await axios.get(endpoints[resourceType]);
+                const response = await axios.get(endpoints[resourceType], {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
                 if (resourceType === 'product') setProducts(response.data.doc);
                 else if (resourceType === 'category') setCategories(response.data.doc);
                 else if (resourceType === 'brand') setBrands(response.data.doc);
@@ -42,7 +51,7 @@ const AddBannerForm = () => {
         };
 
         fetchData();
-    }, [resourceType]);
+    }, [resourceType, token]);
 
     const handleBannerTypeChange = (e) => setBannerType(e.target.value);
     const handleResourceTypeChange = (e) => {
@@ -58,37 +67,43 @@ const AddBannerForm = () => {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            if (file.size > MAX_IMAGE_SIZE) {
+                toast.error('Image is too large. Maximum size is 2MB.');
+                return;
+            }
+
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onloadend = () => {
-                setBannerImage(reader.result);
+                setBannerImage(reader.result); // Set base64 image data for preview
             };
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        const formData = new FormData();
-        formData.append('bannerType', bannerType);
-        formData.append('resourceType', resourceType);
-        formData.append('resourceId', {
-            product: productId,
-            category,
-            brand
-        }[resourceType]);
-        formData.append('url', e.target.url.value);
-        formData.append('publish', false); // Example publish value
-        if (bannerImage) formData.append('bannerImage', bannerImage);
-    
+
+        const data = {
+            bannerType,
+            resourceType,
+            resourceId: {
+                product: productId,
+                category,
+                brand
+            }[resourceType],
+            url: e.target.url.value,
+            publish: false, // Example publish value
+            bannerImage: bannerImage // Base64 image
+        };
+
         try {
-            const response = await axios.post(`${ApiUrl}banners`, formData, {
+            const response = await axios.post(`${ApiUrl}/banners`, data, {
                 headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}` // Add token in headers
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
                 }
             });
-    
+
             if (response.status === 200 || response.status === 201) {
                 toast.success('Banner submitted successfully');
                 e.target.reset(); // Clear the form after successful submission
@@ -100,16 +115,15 @@ const AddBannerForm = () => {
                 setBannerImage(null);
             } else {
                 toast.error('Failed to submit banner');
-                console.log('Failed to submit banner:', response.statusText);
             }
         } catch (error) {
             toast.error('Error submitting banner');
             console.error('Error submitting banner:', error.response ? error.response.data : error.message);
         }
     };
-    
+
     return (
-        <div className="content container-fluid snipcss-j33vn">
+        <div className="content container-fluid">
             <ToastContainer />
             <div className="d-flex justify-content-between mb-3">
                 <div>
@@ -127,30 +141,28 @@ const AddBannerForm = () => {
                 <div className="col-md-12">
                     <div className="card">
                         <div className="card-body">
-                            <form onSubmit={handleSubmit} encType="multipart/form-data" className="banner_form">
-                                <input type="hidden" name="_token" value="PwtXfCOB4jJW4r7EFP7tbQ85VIeh6Q28sCgcjoVB" autoComplete="off" />
+                            <form onSubmit={handleSubmit} className="banner_form">
                                 <div className="row g-3">
                                     <div className="col-md-6">
                                         <div className="form-group">
                                             <label htmlFor="banner_type" className="title-color text-capitalize">Banner Type</label>
                                             <select className="form-control" name="banner_type" id="banner_type" value={bannerType} onChange={handleBannerTypeChange}>
-                                                <option value="Main Banner">Main Banner</option>
-                                                <option value="Popup Banner">Popup Banner</option>
-                                                <option value="Footer Banner">Footer Banner</option>
-                                                <option value="Main Section Banner">Main Section Banner</option>
+                                                <option value="main-banner">Main Banner</option>
+                                                <option value="popup-banner">Popup Banner</option>
+                                                <option value="footer-banner">Footer Banner</option>
+                                                <option value="main-section-banner">Main Section Banner</option>
                                             </select>
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="url" className="title-color text-capitalize">Banner URL</label>
-                                            <input type="url" name="url" className="form-control" id="url" required placeholder="Enter URL" defaultValue="https://codecanyon.net/item/6valley-multivendor-ecommerce-complete-ecommerce-mobile-app-web-and-admin-panel/31448597?s_rank=1" />
+                                            <input type="url" name="url" className="form-control" id="url" required placeholder="Enter URL" defaultValue="https://example.com" />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="resource_type" className="title-color text-capitalize">Resource Type</label>
                                             <select className="form-control" name="resource_type" id="resource_type" value={resourceType} onChange={handleResourceTypeChange}>
                                                 <option value="product">Product</option>
                                                 <option value="category">Category</option>
-                                                {/* <option value="shop">Shop</option> */}
-                                                {/* <option value="brand">Brand</option> */}
+                                                <option value="brand">Brand</option>
                                             </select>
                                         </div>
                                         {resourceType === 'product' && (
@@ -173,16 +185,6 @@ const AddBannerForm = () => {
                                                 </select>
                                             </div>
                                         )}
-                                        {resourceType === 'shop' && (
-                                            <div className="form-group">
-                                                <label htmlFor="shop_id" className="title-color text-capitalize">Shop</label>
-                                                <select className="form-control" name="shop_id" id="shop_id" value={shop} onChange={handleShopChange}>
-                                                    {shops.map(shopItem => (
-                                                        <option key={shopItem._id} value={shopItem._id}>{shopItem.name}</option>
-                                                    ))}
-                                                </select>
-                                            </div>
-                                        )}
                                         {resourceType === 'brand' && (
                                             <div className="form-group">
                                                 <label htmlFor="brand_id" className="title-color text-capitalize">Brand</label>
@@ -193,27 +195,20 @@ const AddBannerForm = () => {
                                                 </select>
                                             </div>
                                         )}
-                                      
                                     </div>
-                                    
-                                 
-                                    <div className="col-lg-6 ">
-                    <PreviewImage
-                    image={bannerImage}
-                      altText="Banner image"
-                      style={{ width: "200px" }}
-                    />
-                    <FileUpload
-                      name="image"
-                      label="Banner Image (Ratio 1:1)"
-                      accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
-                      onChange={handleImageChange}
-                    />
-                  </div>
-
-                                    <div className="col-md-12 mt-3 text-end">
-                                        <button type="submit" className="btn bg-green-400 text-white hover:bg-green-600 " style={{color:'white'}}>Submit</button>
+                                    <div className="col-lg-6">
+                                        <PreviewImage image={bannerImage} altText="Banner image" style={{ width: "200px" }} />
+                                        <FileUpload
+                                            name="image"
+                                            label="Banner Image (Ratio 1:1)"
+                                            accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+                                            onChange={handleImageChange}
+                                            required
+                                        />
                                     </div>
+                                </div>
+                                <div className="d-flex justify-content-end mt-3">
+                                    <button type="submit" className="btn bg-primary text-white" style={{color:"white"}}>Submit</button>
                                 </div>
                             </form>
                         </div>

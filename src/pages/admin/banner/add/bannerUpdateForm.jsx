@@ -4,96 +4,102 @@ import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ApiUrl from '../../../../ApiUrl';
 import PreviewImage from '../../../../components/FormInput/PreviewImage';
 import FileUpload from '../../../../components/FormInput/FileUpload';
+import apiConfig from '../../../../config/apiConfig';
+import { getAuthData } from '../../../../utils/authHelper';
+
+const MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2MB
+const ApiUrl = `${apiConfig.admin}`;
+const ApiUrls = `${apiConfig.seller}`;
 
 const BannerUpdateForm = () => {
-    const { id } = useParams(); // Get the id from the URL
-    const [bannerType, setBannerType] = useState('Main Section Banner');
-    const [resourceType, setResourceType] = useState('product');
+    const { id } = useParams(); // Get banner ID from URL
+    const [bannerType, setBannerType] = useState('');
+    const [resourceType, setResourceType] = useState('');
     const [productId, setProductId] = useState('');
     const [category, setCategory] = useState('');
-    const [shop, setShop] = useState('');
     const [brand, setBrand] = useState('');
     const [bannerImage, setBannerImage] = useState(null);
-
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [brands, setBrands] = useState([]);
-    const [shops, setShops] = useState([]);
+    const [token, setToken] = useState('');
 
     useEffect(() => {
-        const fetchData = async () => {
+        const { token } = getAuthData();
+        setToken(token);
+
+        const fetchBannerData = async () => {
             try {
-                // const endpoints = {
-                //     product: 'http://localhost:3000/api/products/',
-                //     category: 'http://localhost:3000/api/categories/',
-                //     shop: 'http://localhost:3000/api/shops/',
-                //     brand: 'http://localhost:3000/api/brands/'
-                // };
+                // Fetch the existing banner data for editing
+                const bannerResponse = await axios.get(`${ApiUrl}/banners/${id}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const banner = bannerResponse.data.doc;
 
-                const endpoints = {
-                    product: `${ApiUrl}products/`,
-                    category: `${ApiUrl}categories/`,
-                    brand: `${ApiUrl}brands/`
-                };
-
-                const response = await axios.get(endpoints[resourceType]);
-                if (resourceType === 'product') setProducts(response.data.doc);
-                else if (resourceType === 'category') setCategories(response.data.doc);
-                else if (resourceType === 'shop') setShops(response.data.doc);
-                else if (resourceType === 'brand') setBrands(response.data.doc);
+                // Populate form fields with existing data
+                setBannerType(banner.bannerType);
+                setResourceType(banner.resourceType);
+                setProductId(banner.productId || '');
+                setCategory(banner.category || '');
+                setBrand(banner.brand || '');
+                setBannerImage(banner.bannerImage);
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error('Error fetching banner:', error);
+                toast.error('Error fetching banner data');
             }
         };
 
-        fetchData();
-    }, [resourceType]);
+        fetchBannerData();
+    }, [id]);
 
     useEffect(() => {
-        if (id) {
-            const fetchBanner = async () => {
-                try {
-                    const response = await axios.get(`${ApiUrl}banners/${id}`);
-                    const banner = response.data;
-                    setBannerType(banner.bannerType);
-                    setResourceType(banner.resourceType);
-                    setProductId(banner.resourceId.product || '');
-                    setCategory(banner.resourceId.category || '');
-                    setShop(banner.resourceId.shop || '');
-                    setBrand(banner.resourceId.brand || '');
-                } catch (error) {
-                    console.error('Error fetching banner:', error);
-                }
-            };
+        const fetchResourceData = async () => {
+            try {
+                const endpoints = {
+                    product: `${ApiUrls}/products/`,
+                    category: `${ApiUrl}/categories/`,
+                    brand: `${ApiUrl}/brands/`,
+                };
+                const response = await axios.get(endpoints[resourceType], {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
 
-            fetchBanner();
-        }
-    }, [id]);
+                if (resourceType === 'product') setProducts(response.data.doc);
+                else if (resourceType === 'category') setCategories(response.data.doc);
+                else if (resourceType === 'brand') setBrands(response.data.doc);
+            } catch (error) {
+                console.error('Error fetching resources:', error);
+            }
+        };
+
+        fetchResourceData();
+    }, [resourceType, token]);
 
     const handleBannerTypeChange = (e) => setBannerType(e.target.value);
     const handleResourceTypeChange = (e) => {
         setResourceType(e.target.value);
         setProductId('');
         setCategory('');
-        setShop('');
         setBrand('');
     };
     const handleProductChange = (e) => setProductId(e.target.value);
     const handleCategoryChange = (e) => setCategory(e.target.value);
-    const handleShopChange = (e) => setShop(e.target.value);
     const handleBrandChange = (e) => setBrand(e.target.value);
-    // const handleImageChange = (e) => setBannerImage(e.target.files[0]);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            if (file.size > MAX_IMAGE_SIZE) {
+                toast.error('Image is too large. Maximum size is 2MB.');
+                return;
+            }
+
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onloadend = () => {
-                setBannerImage(reader.result);
+                setBannerImage(reader.result); // Set base64 image data for preview
             };
         }
     };
@@ -101,47 +107,39 @@ const BannerUpdateForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        formData.append('bannerType', bannerType);
-        formData.append('resourceType', resourceType);
-        formData.append('resourceId', {
-            product: productId,
-            category,
-            shop,
-            brand
-        }[resourceType]);
-        formData.append('url', e.target.url.value);
-        formData.append('publish', false); // Example publish value
-        if (bannerImage) formData.append('bannerImage', bannerImage);
+        const data = {
+            bannerType,
+            resourceType,
+            resourceId: {
+                product: productId,
+                category,
+                brand
+            }[resourceType],
+            url: e.target.url.value,
+            publish: false, // Example publish value
+            bannerImage: bannerImage // Base64 image
+        };
 
         try {
-            const response = id
-                ? await axios.put(`${ApiUrl}banner/${id}`, formData, {
-                      headers: { 'Content-Type': 'multipart/form-data' }
-                  })
-                : await axios.post(`${ApiUrl}banner/`, formData, {
-                      headers: { 'Content-Type': 'multipart/form-data' }
-                  });
+            const response = await axios.put(`${ApiUrl}/banners/${id}`, data, {
+                headers: { 
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
 
-            if (response.status === 200 || response.status === 201) {
-                toast.success('Banner submitted successfully');
-                e.target.reset(); // Clear the form after successful submission
-                setBannerType('Main Section Banner');
-                setResourceType('product');
-                setProductId('');
-                setCategory('');
-                setShop('');
-                setBrand('');
-                setBannerImage(null);
+            if (response.status === 200) {
+                toast.success('Banner updated successfully');
+                // Optionally navigate back or reset the form
             } else {
-                toast.error('Failed to submit banner');
-                console.log('Failed to submit banner:', response.statusText);
+                toast.error('Failed to update banner');
             }
         } catch (error) {
-            toast.error('Error submitting banner');
-            console.error('Error submitting banner:', error.response ? error.response.data : error.message);
+            toast.error('Error updating banner');
+            console.error('Error updating banner:', error.response ? error.response.data : error.message);
         }
     };
+
 
     return (
         <div className="content container-fluid snipcss-j33vn">
@@ -149,7 +147,7 @@ const BannerUpdateForm = () => {
             <div className="d-flex justify-content-between mb-3">
                 <div>
                     <h2 className="h1 mb-1 text-capitalize d-flex align-items-center gap-2">
-                        <img width="20" src="https://6valley.6amtech.com/public/assets/back-end/img/banner.png" alt="Banner Icon" /> Update Banner
+                        <img width="20" src="/banner.png" alt="Banner Icon" /> Update Banner
                     </h2>
                 </div>
                 <div>
@@ -169,10 +167,10 @@ const BannerUpdateForm = () => {
                                         <div className="form-group">
                                             <label htmlFor="banner_type" className="title-color text-capitalize">Banner Type</label>
                                             <select className="form-control" name="banner_type" id="banner_type" value={bannerType} onChange={handleBannerTypeChange}>
-                                                <option value="Main Banner">Main Banner</option>
-                                                <option value="Popup Banner">Popup Banner</option>
-                                                <option value="Footer Banner">Footer Banner</option>
-                                                <option value="Main Section Banner">Main Section Banner</option>
+                                                <option value="main-banner">Main Banner</option>
+                                                <option value="popup-banner">Popup Banner</option>
+                                                <option value="footer-banner">Footer Banner</option>
+                                                <option value="main-section-banner">Main Section Banner</option>
                                             </select>
                                         </div>
                                         <div className="form-group">
@@ -251,7 +249,7 @@ const BannerUpdateForm = () => {
                   </div>
                                 </div>
                                 <div className="form-group mt-3 col-12 justify-end">
-                                    <button type="submit" className="btn bg-green-400 text-white" style={{color:"white"}}>Save Banner</button>
+                                    <button type="submit" className="btn bg-primary text-white" style={{color:"white", background:"lightgreen"}}>Save Banner</button>
                                 </div>
                             </form>
                         </div>

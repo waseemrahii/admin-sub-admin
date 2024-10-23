@@ -6,7 +6,7 @@ const AnnouncementSetup = () => {
       {" "}
       <div className="font-bold text-[1.3rem] flex gap-2 items-center">
         <img
-          src="https://6valley.6amtech.com/public/assets/back-end/img/announcement.png"
+          src="/announcement.png"
           alt=""
           className="w-6 h-6"
         />

@@ -7,7 +7,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Swal from 'sweetalert2';
 
 // Use the admin endpoint for banners
-const API_URL = `${apiConfig.admin}/coupons`;
+const API_URL = `${apiConfig.seller}/coupon`;
 const { token } = getAuthData(); 
 
 // Thunk for fetching coupons
@@ -51,12 +51,13 @@ export const updateCouponStatus = createAsyncThunk(
   'coupons/updateCouponStatus',
   async ({ couponId, status }, { rejectWithValue }) => {
     try {
+      console.log('Updating coupon status:', couponId, status);
       const response = await axiosInstance.put(
         `${API_URL}/${couponId}`,
-        { status },
+        { status:status },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      return response.data;
+      return response.data.doc;
     } catch (error) {
       const errorMessage = ErrorMessage(error);
       return rejectWithValue(errorMessage);

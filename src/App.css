@@ -804,7 +804,7 @@
   } 
   
   select { 
-      background-image: url('https://6valley.6amtech.com/public/assets/back-end/img/arrow-down.png'); 
+      /* background-image: url('https://6valley.6amtech.com/public/assets/back-end/img/arrow-down.png');  */
       background-size: 7px; 
       background-position: 96% center;
   } 

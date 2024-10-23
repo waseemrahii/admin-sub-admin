@@ -15,7 +15,7 @@ const FileUpload = ({ name, label, accept, onChange }) => (
         onChange={onChange}
       />
       <label className="custom-file-label" htmlFor={`${name}Input`}>
-        Upload {label.toLowerCase()}
+        Upload {label}
       </label>
     </div>
   </div>

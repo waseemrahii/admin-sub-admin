@@ -46,6 +46,7 @@ const AttributeSetup = () => {
     event.preventDefault();
     if (editingAttribute) {
       // Update attribute
+      console.log("editing attribute: ", editingAttribute._id);
       dispatch(updateAttribute({ id: editingAttribute._id, data: newAttribute }));
       toast.success("Attribute updated successfully!");
     } else {

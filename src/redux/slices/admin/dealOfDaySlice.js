@@ -29,9 +29,9 @@ export const fetchDeals = createAsyncThunk(
 // Create deal
 export const createDeal = createAsyncThunk(
   'dealOfTheDay/createDeal',
-  async (dealData, { rejectWithValue }) => {
+  async (data, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post(API_URL, dealData, {
+      const response = await axiosInstance.post(API_URL, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -47,9 +47,9 @@ export const createDeal = createAsyncThunk(
 // Update deal
 export const updateDeal = createAsyncThunk(
   'dealOfTheDay/updateDeal',
-  async ({ id, dealData }, { rejectWithValue }) => {
+  async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.put(`${API_URL}/${id}`, dealData, {
+      const response = await axiosInstance.put(`${API_URL}/${id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

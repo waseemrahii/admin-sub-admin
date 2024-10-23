@@ -65,11 +65,11 @@ const TableList = memo(
     const paginationNumbers = getPaginationNumbers();
 
     return (
-      <div className="mt-3 bg-[#F9F9FB] pr-2 md:p-5 w-full">
+      <div className="mt-3 bg-[#F9F9FB] pr-2 md:p-2 w-full">
         <ToastContainer />
         <TableHeader imageSrc={imageSrc} title={title} />
         <div className="card bg-white shadow-lg rounded-lg">
-          <div className="flex items-start justify-between flex-col md:flex-row gap-4 px-5 py-4">
+          <div className="flex items-start justify-between flex-col md:flex-row gap-4 px-3 py-4">
             <div className="flex gap-3 justify-center items-center">
               <h4 className="font-semibold text-lg">{tableTitle}</h4>
               <span className="badge badge-soft-dark ml-2 flex justify-center items-center">

@@ -98,7 +98,7 @@ const DealOfTheDay = () => {
           confirmButtonColor: "#4CAF50",
           confirmButtonText: "OK",
         });
-        fetchDeals({});
+        dispatch(fetchDeals());
         setCurrentDealId(null);
       } else {
         await dispatch(createDeal(data)).unwrap();
@@ -109,6 +109,8 @@ const DealOfTheDay = () => {
           confirmButtonColor: "#4CAF50",
           confirmButtonText: "OK",
         });
+        dispatch(fetchDeals());
+
       }
       setTitle("");
       setSelectedProduct(null);
@@ -128,7 +130,11 @@ const DealOfTheDay = () => {
     setTitle(dealItem.title);
     setSelectedProduct(dealItem.product);
     setCurrentDealId(dealItem._id);
+    
+    // Scroll smoothly to the top of the page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
 
   const handleDelete = async (id) => {
     Swal.fire({
@@ -290,9 +296,10 @@ const DealOfTheDay = () => {
                     </div>
                   </div>
                 </div>
-                <button type="submit" className="btn btn-primary mt-4">
-                  Add Deal
+                <button type="submit" className="btn bg-primary mt-4 text-white" style={{color:"white"}}>
+                {currentDealId ? "Update Deal" : "Add Deal"}
                 </button>
+              
               </form>
             </div>
           </div>

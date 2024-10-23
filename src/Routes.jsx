@@ -102,7 +102,6 @@ import VenderWalletMethod from "./pages/seller/vendor/list/VenderWalletMethod/Ve
 import ThirParty from "./pages/admin/thirdParty/thirParty.jsx";
 import BusinessSetupShop from "./pages/admin/Bussnesssetup/BusinessSetup.jsx";
 import AttributeSetup from "./pages/admin/productAttributeSetUp/productAttributeSetUp.jsx";
-import UpdateAttribute from "./pages/admin/productAttributeSetUp/UpdateAtribute.jsx";
 import CategoryUpdate from "./pages/admin/Categories/Main_Categories/Category/add/CategoryEdit/CategoryEdit.jsx";
 import CouponManagement from "./pages/admin/offerAndDeals/coupon/coupon.jsx";
 import CouponUpdate from "./pages/admin/offerAndDeals/coupon/couponUpdate.jsx";
@@ -146,7 +145,6 @@ function AllRoutes() {
         <Route path="/profileinformation" element={<ProfileInformation />} />
         <Route path="/refounddetail/:id" element={<RefundDetails />} />
         <Route path="/productattributesetup" element={<AttributeSetup />} />
-        <Route path="/productattributeupdate" element={<UpdateAttribute />} />
         <Route path="/inhouseproductlist" element={<InHouseProductPage />} />
         {/* <Route path="/inhouseproductlistcode" element={<GenerateBarcode />} /> */}
         <Route path="/products/:productId" element={<ProductDetails />} />

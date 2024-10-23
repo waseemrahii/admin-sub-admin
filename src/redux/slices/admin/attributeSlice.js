@@ -48,10 +48,12 @@ export const createAttribute = createAsyncThunk(
 // Update attribute
 export const updateAttribute = createAsyncThunk(
   'attribute/updateAttribute',
-  async ({ attributeId, attributeData }, { rejectWithValue }) => {
+  async ({ id, data }, { rejectWithValue }) => {
     const { token } = getAuthData(); // Retrieve token for authorization
     try {
-      const response = await axiosInstance.put(`${API_URL}/${attributeId}`, attributeData, {
+      console.log(" attributeData: ", data);
+      console.log("id: ", id);
+      const response = await axiosInstance.put(`${API_URL}/${id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
