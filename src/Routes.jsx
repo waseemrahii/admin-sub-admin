@@ -122,7 +122,7 @@ function AllRoutes() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Navigate to="/dashboard" />} />
+        {/* <Route path="/" element={<Navigate to="/dashboard" />} /> */}
         <Route path="/businesssetup" element={<BusinessSetupShop />} />
         <Route path="/vendernew" element={<VendorNewRequestProductPage />} />
         <Route
@@ -133,7 +133,7 @@ function AllRoutes() {
         {/* <Route path="/pos" element={<POS />} /> */}
         <Route path="/venderdenied" element={<VendorDeniedProductPage />} />
 
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<Dashboard />} />
         <Route path="/allorders" element={<OrderList />} />
         <Route path="/orderdetail/:id" element={<OrderDetails />} />
         <Route path="/pendingorders" element={<PendingOrders />} />

@@ -250,7 +250,7 @@ const Header = () => {
             <img
               src="/vistalogo.png"
               alt="Logo"
-              className="md:h-16 h-10 w-full object-center"
+              className="md:h-12 h-8 w-full object-center"
             />
           </div>
 

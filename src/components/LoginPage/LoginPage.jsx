@@ -26,7 +26,7 @@ const LoginPage = () => {
       const resultAction = await dispatch(login({ email, password }));
       if (login.fulfilled.match(resultAction)) {
         toast.success("Login successful");
-        navigate("/dashboard");
+        navigate("/");
         // Save email and password if "Remember Me" is checked
         if (rememberMe) {
           localStorage.setItem("rememberedEmail", email);
