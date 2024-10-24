@@ -52,11 +52,11 @@ const OrderManagement = ({ status, title }) => {
     currentPage * itemsPerPage
   );
 
-  const handleUpdateStatus = (orderId, status) => {
-    dispatch(updateOrderStatus({ orderId, status }))
-      .then(() => toast.success("Order status updated successfully!"))
-      .catch((err) => toast.error(`Failed to update status: ${err.message}`));
-  };
+  // const handleUpdateStatus = (orderId, status) => {
+  //   dispatch(updateOrderStatus({ orderId, status }))
+  //     .then(() => toast.success("Order status updated successfully!"))
+  //     .catch((err) => toast.error(`Failed to update status: ${err.message}`));
+  // };
 
   const handleDeleteOrder = (orderId) => {
     Swal.fire({

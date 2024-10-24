@@ -3,7 +3,7 @@ import { BsThreeDotsVertical } from "react-icons/bs"; // Importing relevant icon
 import PaymentOption from "./PaymentOption/PaymentOption";
 import PayMentMethod from "../ThirdParty/Paymentmethod/PayMentMethod";
 import Priority from "./Priority/Priority";
-
+import './businessetup.css'
 import BussnessVendorSetup from "./VenderSetup/VenderSetup";
 import CustomerSettings from "./Customers/Customers";
 import DeliveryManSettings from "./Deliver";

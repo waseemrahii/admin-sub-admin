@@ -43,7 +43,7 @@ export const sidebarItems = [
     title: "Dashboard",
 
     icon: <IoHome />,
-    link: "/dashboard",
+    link: "/",
     isDropdown: false,
   },
   {
@@ -275,7 +275,8 @@ export const sidebarItems = [
     icon: <TbWorld />,
     isDropdown: true,
     subItems: [
-      { title: "Business Setup", link: "/appsettings" },
+      { title: "Business Setup", link: "/businesssetup" },
+      // { title: "Business Setup", link: "/appsettings" },
       { title: "Inhouse Shop", link: "/businessinhouse" },
     ],
   },

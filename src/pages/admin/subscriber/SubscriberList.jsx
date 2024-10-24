@@ -1,44 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { FaSearch, FaDownload, FaChevronDown } from "react-icons/fa";
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { FaSearch, FaDownload, FaChevronDown, FaTrash } from 'react-icons/fa';
+import { fetchSubscribers, deleteSubscriber } from '../../../redux/slices/admin/subscriberSlice'; // Update path as needed
+import ActionButton from '../../../components/ActionButton/Action';
 
 const SubscriberList = () => {
-  const [subscribers, setSubscribers] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
+  const dispatch = useDispatch();
+  const [searchValue, setSearchValue] = useState('');
 
+  // Fetch subscribers from Redux state
+  const { subscribers,createAt, loading, error } = useSelector((state) => state.subscriber);
+
+  // Fetch subscribers when component mounts
   useEffect(() => {
-    fetchSubscribers();
-  }, []);
+    dispatch(fetchSubscribers());
+  }, [dispatch]);
 
-  const fetchSubscribers = async () => {
-    try {
-      const response = await axios.get('http://localhost:3000/api/subscribers');
-      setSubscribers(response.data);
-    } catch (error) {
-      console.error("Error fetching subscribers", error);
-    }
-  };
-
-  const handleSearch = async (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.get('http://localhost:3000/api/subscribers', {
-        params: { searchValue }
-      });
-      setSubscribers(response.data);
-    } catch (error) {
-      console.error("Error searching subscribers", error);
+    dispatch(fetchSubscribers({ search: searchValue }));
+  };
+
+  const handleDelete = (subscriberId) => {
+    if (window.confirm('Are you sure you want to delete this subscriber?')) {
+      dispatch(deleteSubscriber(subscriberId));
     }
   };
 
-  const handleExport = async () => {
-    try {
-      const response = await axios.get('http://localhost:3000/api/subscribers/export');
-      // Handle the export logic (e.g., download the file)
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error exporting subscribers", error);
-    }
+  const handleExport = () => {
+    // Implement export functionality if needed
+    console.log('Export functionality here');
   };
 
   return (
@@ -49,8 +40,8 @@ const SubscriberList = () => {
             src="https://6valley.6amtech.com/public/assets/back-end/img/subscribers.png"
             width="20"
             alt=""
-          />{" "}
-          Subscriber list{" "}
+          />{' '}
+          Subscriber list{' '}
           <span className="badge badge-soft-dark radius-50 fz-14 ml-1">
             {subscribers.length}
           </span>
@@ -103,22 +94,33 @@ const SubscriberList = () => {
                     <th>SL</th>
                     <th scope="col">Email</th>
                     <th>Subscription date</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {subscribers.map((subscriber, index) => (
-                    <tr key={subscriber._id}>
-                      <td>{index + 1}</td>
-                      <td>{subscriber.email}</td>
-                      <td>{new Date(subscriber.subscriptionDate).toLocaleString()}</td>
-                    </tr>
-                  ))}
+                  {!loading &&
+                    subscribers.map((subscriber, index) => (
+                      <tr key={subscriber._id}>
+                        <td>{index + 1}</td>
+                        <td>{subscriber.email}</td>
+                        {
+                          console.log(" create date", createAt)
+                        }
+                        <td>{new Date(createAt).toLocaleString()}</td>
+                        <td>
+                          <ActionButton
+                            onClick={() => handleDelete(subscriber._id)}
+                            icon={FaTrash} // Pass dynamic icon
+                            className="ml-4"
+                          />
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>
-            <div className="table-responsive mt-4">
-              <div className="px-4 d-flex justify-content-lg-end"></div>
-            </div>
+            {loading && <p>Loading...</p>}
+            {error && <p className="text-danger">{error}</p>}
           </div>
         </div>
       </div>

@@ -213,13 +213,11 @@ const CustomerList = React.memo(() => {
                         to={"/customerdetails"}
                         icon={FaEye} // Pass dynamic icon
                         className="ml-4"
-                        label="Eye"
                       />
                       <ActionButton
                         onClick={() => handleDelete(customer._id)}
                         icon={FaTrash} // Pass dynamic icon
                         className="ml-4"
-                        label="Delete"
                       />
                     </div>
                   </td>
