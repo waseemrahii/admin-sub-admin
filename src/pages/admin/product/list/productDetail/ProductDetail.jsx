@@ -1,38 +1,48 @@
 import React, { useState, useEffect } from "react";
 import { FaGlobe, FaStar, FaTrash } from "react-icons/fa";
-import { AiOutlineFile, AiOutlineShoppingCart } from "react-icons/ai";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ActionButton from "../../../../../components/ActionButton/Action";
-import ApiConfig from "../../../../../config/apiConfig";
-import {
-  fetchProductById,
-  updateProductStatus,
-} from "../../../../../redux/slices/seller/productSlice";
 import Swal from "sweetalert2";
+import { fetchProductById, updateProductStatus } from "../../../../../redux/slices/seller/productSlice";
+import ApiConfig from "../../../../../config/apiConfig";
+import { AiOutlineFile, AiOutlineShoppingCart } from "react-icons/ai";
 
 const ProductDetail = () => {
   const { productId } = useParams();
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const { loading, error, products } = useSelector((state) => state.product);
+  
+  const [productData, setProductData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     dispatch(fetchProductById(productId));
   }, [dispatch, productId]);
 
+  useEffect(() => {
+    const fetchProductData = async () => {
+      try {
+        const url = `${ApiConfig.seller}/products/${productId}`;
+        const response = await axios.get(url);
+        if (response.status === 200) {
+          setProductData(response.data.doc);
+        } else {
+          setErrorMessage("Failed to fetch product data");
+        }
+      } catch (error) {
+        setErrorMessage("An error occurred while fetching product data.");
+      }
+    };
+    fetchProductData();
+  }, [productId]);
+
   const handleUpdateStatus = (id, currentStatus) => {
-    let newStatus;
-    if (currentStatus === "pending") {
-      newStatus = "approved"; // Change to active if current status is pending
-    } else if (currentStatus === "approved") {
-      newStatus = "rejected"; // Change to rejected if current status is active
-    } else {
-      return; // No change needed if already rejected
-    }
+    let newStatus = currentStatus === "pending" ? "approved" : currentStatus === "approved" ? "rejected" : null;
+    if (!newStatus) return;
 
     Swal.fire({
       title: "Are you sure?",
@@ -44,7 +54,17 @@ const ProductDetail = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(updateProductStatus({ productId: id, status: newStatus }))
-          .then(() => toast.success(`Product status updated to ${newStatus}!`))
+          .then(() => {
+            dispatch(fetchProductById(productId));
+            toast.success(`Product status updated to ${newStatus}!`);
+
+            const { userType } = productData;
+            if (userType === "in-house") {
+              navigate("/inhouseproductlist");
+            } else if (userType === "vendor") {
+              navigate(newStatus === "approved" ? "/venderapprove" : "/venderdenied");
+            }
+          })
           .catch(() => toast.error("Failed to update product status."));
       } else {
         toast.info("Status update canceled.");
@@ -52,42 +72,15 @@ const ProductDetail = () => {
     });
   };
 
-  const [productData, setProductData] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
-
-  useEffect(() => {
-    const fetchProductData = async () => {
-      try {
-        console.log(productId);
-        const url = `${ApiConfig.seller}/products/${productId}`;
-        const response = await axios.get(url);
-        if (response.status === 200) {
-          setProductData(response.data.doc);
-        } else {
-          setErrorMessage("Failed to fetch product data");
-          console.error("Failed to fetch product data");
-        }
-      } catch (error) {
-        setErrorMessage("An error occurred while fetching product data.");
-        console.error("An error occurred while fetching product data:", error);
-      }
-    };
-
-    fetchProductData();
-  }, [productId]);
-
   const handleDeleteReview = async (reviewId) => {
     try {
-      await axios.delete(
-        `${ApiConfig.seller}/products/${productId}/reviews/${reviewId}`
-      );
+      await axios.delete(`${ApiConfig.seller}/products/${productId}/reviews/${reviewId}`);
       setProductData((prevData) => ({
         ...prevData,
         reviews: prevData.reviews.filter((review) => review._id !== reviewId),
       }));
       toast.success("Review deleted successfully", { autoClose: 3000 });
     } catch (error) {
-      console.error("Error deleting review:", error);
       toast.error("Failed to delete review", { autoClose: 3000 });
     }
   };
@@ -119,6 +112,7 @@ const ProductDetail = () => {
     taxAmount = "0",
     discount = "0",
     videoLink = "https://youtu.be/yC4xCS4nLRg?si=tvU2m2NCYoivkfF2",
+    userType = "in-house",
   } = productData;
 
   return (
@@ -326,7 +320,8 @@ const ProductDetail = () => {
               </div>
               <div className="card-body">
                 <div>
-                  <h6 className="mb-3 text-capitalize">{productData.name}</h6>
+                  <h6 className="mb-3 text-capitalize">Meta Title: {productData?.metaTitle}</h6>
+                  <h6 className="mb-3 text-capitalize">Meta Description :{productData?.metaDescription}</h6>
                 </div>
                 {/* <p className="text-capitalize">
               <div

@@ -126,11 +126,13 @@ export const updateProductStatus = createAsyncThunk(
   async ({ productId, status }, { rejectWithValue }) => {
     try {
       const { token } = getAuthData(); // Get the token
+      console.log(productId, status)
       const response = await axiosInstance.put(`${API_URL}/status/${productId}`, { status }, {
         headers: {
           Authorization: `Bearer ${token}` // Include token in the headers
         }
       });
+      console.log("update status response",response)
       return response.data.doc; // Ensure the response contains the updated product
     } catch (error) {
       return rejectWithValue(ErrorMessage(error)); // Utilize ErrorMessage utility

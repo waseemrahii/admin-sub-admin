@@ -43,7 +43,7 @@ const VendorNewRequestProductPage = () => {
         category: '',
         searchValue: '',
         userType: 'vendor', // Filter for vendor
-        status: '', // No filter for status
+        status: 'pending', // No filter for status
         vendorNew4Days: true // Filter for new vendor requests
       }}
     />

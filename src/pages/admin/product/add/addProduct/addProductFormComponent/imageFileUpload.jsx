@@ -43,7 +43,7 @@ const FileUpload = ({ label, ratio, image, onChange, onDelete, isThumbnail }) =>
                 <img
                   src="https://6valley.6amtech.com/public/assets/back-end/img/icons/product-upload-icon.svg"
                   alt="Upload"
-                  className="w-75"
+                  className=""
                 />
                 <h3 className="text-muted">Upload Image</h3>
               </div>
@@ -51,7 +51,7 @@ const FileUpload = ({ label, ratio, image, onChange, onDelete, isThumbnail }) =>
           )}
         </div>
         <p className="text-muted mt-2">
-          Image format : Jpg, png, jpeg, webp <br /> Image size : Max 2 MB
+           Image size : Max 2 MB
         </p>
       </div>
     </div>

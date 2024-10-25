@@ -128,6 +128,7 @@ const TableList = memo(
                     type="submit"
                     title="Search"
                     className="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-r-md"
+                   style={{color:"white"}}
                   >
                     Search
                   </button>
@@ -213,8 +214,8 @@ const TableList = memo(
                 disabled={currentPage === 1}
                 className={`px-2 py-1 mx-1 rounded-lg transition-colors duration-300 ${
                   currentPage === 1
-                    ? "bg-green-300 text-white cursor-not-allowed"
-                    : "bg-green-300 hover:bg-gray-400 text-white"
+                    ? "bg-gray-400 text-white cursor-not-allowed"
+                    : "bg-gray-400 hover:bg-primary text-white"
                 }`}
               >
                 ❮ {/* Previous Icon */}
@@ -235,7 +236,7 @@ const TableList = memo(
                           className={`px-2 py-1 rounded-lg transition-all duration-300 ease-in-out ${
                             currentPage === pageNumber
                               ? "bg-primary text-white font-bold shadow-md"
-                              : "bg-green-300 text-gray-800 hover:bg-green-300 hover:text-black"
+                              : "bg-gray-400 text-gray-800 hover:bg-primary-dark hover:text-black"
                           }`}
                         >
                           {pageNumber}
@@ -252,8 +253,8 @@ const TableList = memo(
                 style={{ color: "white" }}
                 className={`px-2 py-1 mx-1 rounded-lg transition-colors duration-300 ${
                   currentPage === totalPages
-                    ? "bg-green-300 text-gray-400 cursor-not-allowed"
-                    : "bg-green-300 hover:bg-green-400 text-white"
+                    ? "bg-gray-300 text-gray-400 cursor-not-allowed"
+                    : "bg-gray-300 hover:bg-green-400 text-white"
                 }`}
               >
                 ❯ {/* Next Icon */}

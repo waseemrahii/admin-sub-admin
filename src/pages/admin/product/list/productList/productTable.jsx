@@ -16,7 +16,7 @@ const ProductTable = React.memo(
     products,
     onToggleFeatured,
     onUpdateStatus,
-    // onDeleteProduct,
+    onDeleteProduct,
     totalDocs,
     limit,
     totalPages,
@@ -61,7 +61,7 @@ const ProductTable = React.memo(
                     id="datatableSearch_"
                     type="search"
                     name="searchValue"
-                    className="form-control border-green-400"
+                    className="form-control border-primary outline-none"
                     placeholder="Search by Product Name"
                     aria-label="Search orders"
                     value={searchQuery}
@@ -93,7 +93,7 @@ const ProductTable = React.memo(
               </Link> */}
               <Link
                 to="/inhouseaddproduct"
-                className="btn flex justify-center items-center gap-3 bg-primary text-white hover:bg-primary"
+                className="btn flex justify-center items-center gap-3 bg-primary text-white hover:bg-primary hover:text-white"
               >
                 <FiPlus />
                 <span className="text">Add new product</span>
@@ -167,14 +167,14 @@ const ProductTable = React.memo(
                         >
                           <FiEdit />
                         </Link>
-                        {/* <button
+                        <button
                           type="button"
                           className="btn btn-sm border-red-400 text-red-400 hover:bg-red-500 hover:text-white"
                           onClick={() => onDeleteProduct(product._id)}
                           title="Delete"
                         >
                           <FiTrash />
-                        </button> */}
+                        </button>
                       </div>
                     </td>
                   </tr>
