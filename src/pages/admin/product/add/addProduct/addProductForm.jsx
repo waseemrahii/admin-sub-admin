@@ -8,6 +8,7 @@ import {
   fetchSubCategories,
   fetchSubSubCategories,
 } from "../../../../../redux/slices/admin/categorybrandSlice";
+import { useNavigate } from "react-router-dom";  // Import useNavigate
 
 import "react-quill/dist/quill.snow.css";
 import "./form.css";
@@ -26,6 +27,7 @@ const API_URL = `${apiConfig.seller}/products`;
 
 const AddNewProduct = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();  // Initialize useNavigate
 
   const {
     categories,
@@ -201,6 +203,8 @@ const AddNewProduct = () => {
       setSelectedColors([]);
       setProductAttributes([]);
       setFormData({ ...initialFormState });
+      navigate('/inhouseproductlist');
+
   
     } catch (error) {
       console.error("Product creation failed:", error);

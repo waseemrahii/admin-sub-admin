@@ -15,7 +15,7 @@ import PreviewImage from "../../../../../components/FormInput/PreviewImage";
 import FileUpload from "../../../../../components/FormInput/FileUpload";
 import FormTextArea from "../../../../../components/FormInput/FormTextArea";
 
-const AddVendorForm = () => {
+const AddEmploye = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",

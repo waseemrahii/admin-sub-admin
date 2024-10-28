@@ -41,7 +41,7 @@ import { ImStatsBars } from "react-icons/im";
 export const sidebarItems = [
   {
     title: "Dashboard",
-
+    SubHeading: "Overview",
     icon: <IoHome />,
     link: "/",
     isDropdown: false,
@@ -114,6 +114,18 @@ export const sidebarItems = [
   },
 
   {
+    title: "Vendor",
+    SubHeading: "Vendors management",
+    icon: <FaWallet />,
+    isDropdown: true,
+    subItems: [
+      { title: "Vendor List", link: "/venderlist" },
+      { title: "Add Vendor", link: "/addvenderform" },
+      { title: "Vendor Wallet", link: "/addvenderwallet" },
+      { title: "Vendor Wallet Method", link: "/addvenderwalletmethod" },
+    ],
+  },
+  {
     title: "Vendor Products",
     icon: <AiOutlineSpotify />,
     isDropdown: true,
@@ -124,6 +136,7 @@ export const sidebarItems = [
       { title: "Denied Products", link: "/venderdenied" },
     ],
   },
+
   // {
   //   title: "Product Gallery",
   //   icon: <GrGallery />,
@@ -218,20 +231,10 @@ export const sidebarItems = [
     link: "/orderreport",
     isDropdown: false,
   },
-  {
-    title: "Vendor",
-    SubHeading: "Users management",
-    icon: <FaWallet />,
-    isDropdown: true,
-    subItems: [
-      { title: "Vendor List", link: "/venderlist" },
-      { title: "Add Vendor", link: "/addvenderform" },
-      { title: "Vendor Wallet", link: "/addvenderwallet" },
-      { title: "Vendor Wallet Method", link: "/addvenderwalletmethod" },
-    ],
-  },
+
   {
     title: "Customers",
+    SubHeading: "Customer management",
     icon: <MdOutlineFolderZip />,
     isDropdown: true,
     subItems: [
@@ -255,6 +258,7 @@ export const sidebarItems = [
   },
   {
     title: "Employees",
+    SubHeading: "Employee management",
     icon: <IoPersonOutline />,
     isDropdown: true,
     subItems: [
@@ -264,6 +268,7 @@ export const sidebarItems = [
   },
   {
     title: "Subscribers",
+    SubHeading: "Subscriber",
     icon: <IoMdPerson />,
     link: "/subscriberlist",
     isDropdown: false,
@@ -281,7 +286,7 @@ export const sidebarItems = [
     ],
   },
   {
-    title: "System Setup",
+    title: "System settings",
     SubHeading: "System Setup",
 
     icon: <IoSettingsOutline />,

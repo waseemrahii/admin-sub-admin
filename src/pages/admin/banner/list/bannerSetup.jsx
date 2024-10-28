@@ -38,7 +38,6 @@ const BannerSetup = () => {
         dispatch(updateBanner({ bannerId: id, status: !currentStatus }))
           .then(() => {
             toast.success(`Banner status updated to ${newStatus}!`);
-            // Fetch the updated banners to refresh the data
             dispatch(fetchBanners());
           })
           .catch(() => console.log("Failed to update banner status."));
