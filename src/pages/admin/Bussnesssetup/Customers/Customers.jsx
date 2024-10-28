@@ -26,7 +26,7 @@ const CustomerSettings = () => {
             <div className="row align-items-end gy-2">
               <div className="col-xl-3 col-md-6">
                 <div className="d-flex justify-content-between align-items-center gap-10 form-control">
-                  <span className="title-color text-capitalize">
+                  <span className="title-color text-capitalize flex items-center">
                     Customer wallet
                     <span
                       className="input-label-secondary cursor-pointer"
@@ -62,7 +62,7 @@ const CustomerSettings = () => {
               </div>
               <div className="col-xl-3 col-md-6">
                 <div className="d-flex justify-content-between align-items-center gap-10 form-control">
-                  <span className="title-color">
+                  <span className="title-color flex items-center">
                     Customer Loyalty Point
                     <span
                       className="input-label-secondary cursor-pointer"
@@ -100,7 +100,7 @@ const CustomerSettings = () => {
               </div>
               <div className="col-xl-3 col-md-6">
                 <div className="d-flex justify-content-between align-items-center gap-10 form-control">
-                  <span className="title-color d-flex align-items-center gap-1">
+                  <span className="title-color flex items-center gap-1">
                     Customer referral earning
                     <span
                       className="input-label-secondary cursor-pointer"
@@ -160,7 +160,7 @@ const CustomerSettings = () => {
             <div className="row align-items-end gy-2">
               <div className="col-xl-4 col-md-6">
                 <div className="d-flex justify-content-between align-items-center gap-10 form-control">
-                  <span className="title-color">
+                  <span className="title-color flex items-center">
                     Add Refund Amount to Wallet
                     <span
                       className="input-label-secondary cursor-pointer"
@@ -196,7 +196,7 @@ const CustomerSettings = () => {
               </div>
               <div className="col-xl-4 col-md-6">
                 <div className="d-flex justify-content-between align-items-center gap-10 form-control">
-                  <span className="title-color">
+                  <span className="title-color flex items-center">
                     Add Fund to Wallet
                     <span
                       className="input-label-secondary cursor-pointer"
@@ -232,7 +232,7 @@ const CustomerSettings = () => {
               </div>
               <div className="col-xl-4 col-md-6">
                 <div className="d-flex justify-content-between align-items-center gap-10 form-control">
-                  <span className="title-color d-flex align-items-center gap-1">
+                  <span className="title-color flex items-center gap-1">
                     Wallet to Wallet Transfer
                     <span
                       className="input-label-secondary cursor-pointer"
@@ -310,7 +310,7 @@ const CustomerSettings = () => {
               </div>
               <div className="col-xl-4 col-md-6">
                 <div className="d-flex justify-content-between align-items-center gap-10 form-control">
-                  <span className="title-color">
+                  <span className="title-color flex items-center">
                     Wallet Balance Withdrawal
                     <span
                       className="input-label-secondary cursor-pointer"
@@ -356,7 +356,7 @@ const CustomerSettings = () => {
             <div className="row align-items-end gy-2">
               <div className="col-xl-4 col-md-6">
                 <div className="d-flex justify-content-between align-items-center gap-10 form-control">
-                  <span className="title-color text-capitalize">
+                  <span className="title-color text-capitalize flex items-center">
                     Customer wallet
                     <span
                       className="input-label-secondary cursor-pointer"
@@ -393,7 +393,7 @@ const CustomerSettings = () => {
               {/* Customer Loyalty Point */}
               <div className="col-xl-4 col-md-6">
                 <div className="d-flex justify-content-between align-items-center gap-10 form-control">
-                  <span className="title-color">
+                  <span className="title-color flex items-center">
                     Customer Loyalty Point
                     <span
                       className="input-label-secondary cursor-pointer"
@@ -493,7 +493,7 @@ const CustomerSettings = () => {
               {/* Refund Amount to Wallet */}
               <div className="col-xl-4 col-md-6">
                 <div className="d-flex justify-content-between align-items-center gap-10 form-control">
-                  <span className="title-color">
+                  <span className="title-color flex items-center">
                     Add Refund Amount to Wallet
                     <span
                       className="input-label-secondary cursor-pointer"
@@ -530,7 +530,7 @@ const CustomerSettings = () => {
               {/* Add Fund to Wallet */}
               <div className="col-xl-4 col-md-6">
                 <div className="d-flex justify-content-between align-items-center gap-10 form-control">
-                  <span className="title-color">
+                  <span className="title-color flex items-center">
                     Add Fund to Wallet
                     <span
                       className="input-label-secondary cursor-pointer"
@@ -570,7 +570,8 @@ const CustomerSettings = () => {
         <div className="text-end">
           <button
             type="submit"
-            className="btn bg-[#A1CB46] text-white hover:bg-[#7e9f37] px-3 py-2"
+            className="btn bg-primary text-white hover:bg-primary-dark px-3 py-2"
+            style={{color:"white"}}
           >
             Submit
           </button>

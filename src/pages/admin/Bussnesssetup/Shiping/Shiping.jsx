@@ -1,6 +1,7 @@
 import React from "react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { BsToggleOn, BsToggleOff } from "react-icons/bs";
+import Switcher from "../../../../components/FormInput/Switcher";
 
 const ShippingSettings = () => {
   // Simulated data for category-wise shipping costs (replace with your own array)
@@ -107,7 +108,7 @@ const ShippingSettings = () => {
                     Shipping method for In-house deliver
                   </label>
                   <select
-                    className="form-control text-capitalize w-100 shipping-type"
+                    className="form-control outline-none text-capitalize w-100 shipping-type"
                     name="shippingCategory"
                   >
                     <option value="0" disabled>
@@ -120,7 +121,7 @@ const ShippingSettings = () => {
                     <option value="product_wise">Product wise</option>
                   </select>
                   <div className="mt-2 style-rSBws" id="product_wise_note">
-                    <p>
+                    {/* <p>
                       <img
                         width="16"
                         className="mt-n1"
@@ -130,7 +131,7 @@ const ShippingSettings = () => {
                       <strong>Note:</strong> When adding a product, a
                       product-specific shipping charge is added. Verify that all
                       of the products delivery costs are up to date.
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               </div>
@@ -138,7 +139,8 @@ const ShippingSettings = () => {
                 <div className="d-flex justify-content-end gap-10">
                   <button
                     type="submit"
-                    className="btn bg-[#A1CB46] text-white hover:bg-[#7e9f37] px-3 py-2"
+                    className="btn bg-primary text-white hover:bg-primary-dark px-3 py-2"
+                    style={{color:"white"}}
                   >
                     Save
                   </button>
@@ -166,7 +168,7 @@ const ShippingSettings = () => {
             <div className="table-responsive">
               <form>
                 <table
-                  className="table table-hover table-borderless table-thead-bordered table-nowrap table-align-middle card-table w-100 style-OjLNg"
+                  className="table table-hover  table-borderless table-thead-bordered table-nowrap table-align-middle card-table w-100 style-OjLNg"
                   id="style-OjLNg"
                 >
                   <thead className="thead-light thead-50 text-capitalize">
@@ -223,9 +225,10 @@ const ShippingSettings = () => {
                               value={item.id}
                               checked={item.status}
                             />
-                            <span className="switcher_control">
-                              <BsToggleOn className="status" />
-                              <BsToggleOff className="slider" />
+                            <span className="">
+                              {/* <BsToggleOn className="status" />
+                              <BsToggleOff className="slider" /> */}
+                              <Switcher/>
                             </span>
                           </label>
                         </td>

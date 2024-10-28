@@ -74,7 +74,7 @@ const BussnessVendorSetup = () => {
               </div>
               <div className="col-xl-4 col-md-6">
                 <div className="d-flex justify-content-between align-items-center gap-10 form-control form-group">
-                  <span className="title-color">
+                  <span className="title-color flex items-center">
                     Enable POS in Vendor Panel
                     <span
                       className="input-label-secondary cursor-pointer"
@@ -101,7 +101,7 @@ const BussnessVendorSetup = () => {
               </div>
               <div className="col-xl-4 col-md-6">
                 <div className="d-flex justify-content-between align-items-center gap-10 form-control form-group">
-                  <span className="title-color">
+                  <span className="title-color flex items-center">
                     Vendor registration
                     <span
                       className="input-label-secondary cursor-pointer"
@@ -129,7 +129,7 @@ const BussnessVendorSetup = () => {
               </div>
               <div className="col-xl-4 col-md-6">
                 <div className="d-flex justify-content-between align-items-center gap-10 form-control form-group">
-                  <span className="title-color">
+                  <span className="title-color flex items-center">
                     Set minimum order amount
                     <span
                       className="input-label-secondary cursor-pointer"
@@ -229,7 +229,8 @@ const BussnessVendorSetup = () => {
         <div className="d-flex justify-content-end mt-3">
           <button
             type="submit"
-            className="btn bg-[#A1CB46] text-white hover:bg-[#7e9f37] py-2 px-4"
+            className="btn bg-primary  hover:bg-primary-dark py-2 px-4"
+            style={{color:"white"}}
             onClick={handleSave}
           >
             Save

@@ -35,7 +35,7 @@ const DeliveryManSettings = () => {
           <div className="row align-items-end">
             <div className="col-xl-4 col-md-6">
               <div className="form-group d-flex justify-content-between align-items-center gap-10 form-control">
-                <span className="title-color">
+                <span className="title-color flex items-center text-nowrap">
                   Upload Picture on Delivery{" "}
                   <span
                     className="input-label-secondary cursor-pointer"
@@ -66,8 +66,8 @@ const DeliveryManSettings = () => {
                     data-off-message="<p>If enabled deliverymen can not upload picture at the order deliveries time</p>"
                   />
                   <span className="switcher_control">
-                    <BsToggleOn className="status" />
-                    <BsToggleOff className="slider" />
+                    {/* <BsToggleOn className="status" />
+                    <BsToggleOff className="slider" /> */}
                   </span>
                 </label>
               </div>
@@ -77,7 +77,8 @@ const DeliveryManSettings = () => {
             <button
               type="submit"
               id="submit"
-              className="btn bg-[#A1CB46] text-white hover:bg-[#7e9f37] py-2 px-4"
+              className="btn bg-primary  hover:bg-primary-dark py-2 px-4"
+              style={{color:"white"}}
             >
               Save
             </button>

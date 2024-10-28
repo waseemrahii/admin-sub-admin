@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 const InvoiceSettings = () => {
+  const [selectedMultipleImage, setSelectedMultipleImage] = useState([]);
   const [formData, setFormData] = useState({
     terms_and_condition: "",
     business_identity: "",
@@ -22,6 +23,12 @@ const InvoiceSettings = () => {
     // Handle form submission logic here
     console.log("Form data submitted:", formData);
   };
+  const handleImageChange = (event) => {
+    const files = Array.from(event.target.files); // Get selected files
+    const imageUrls = files.map((file) => URL.createObjectURL(file)); // Create URLs for display
+    setSelectedMultipleImage(imageUrls); // Update state with image URLs
+  };
+
 
   return (
     <div className="card snipcss-Of6G1">
@@ -108,35 +115,53 @@ const InvoiceSettings = () => {
               </div>
             </div>
             <div className="col-md-6 d-flex flex-column justify-content-center">
-              <div>
-                <label className="title-color text-capitalize">
-                  Invoice logo{" "}
-                  <span className="text-info">(1000 x 308 px)</span>
-                </label>
-                <div className="mx-auto text-center">
-                  <div className="uploadDnD">
-                    <div
-                      className="form-group inputDnD input_image input_image_edit bg-img style-Fsg9s"
-                      data-title=""
-                      id="style-Fsg9s"
-                    >
-                      <input
-                        type="file"
-                        name="image"
-                        className="form-control-file text--primary font-weight-bold"
-                        id="invoice-image"
-                        accept=".jpg, .png, .jpeg, .gif, .bmp, .webp |image/*"
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
+    <div>
+      <div className="flex gap-2">
+      <label className="text-sm  text-gray-700">
+        Invoice Logo
+      </label>
+      <h3 className="">(1000 x 308Px)</h3>
+      </div>
+      <div className="flex flex-wrap gap-4 relative">
+        {/* If images are selected, render them; otherwise, show empty box */}
+        {selectedMultipleImage.length > 0 ? (
+          selectedMultipleImage.map((image, index) => (
+            <div
+              key={index}
+              className="relative border-dashed border-2 border-green-300 h-full w-full sm:w-[32vw] sm:h-[20vh] md:w-[40vw] md:h-[32vh] lg:w-[32vw] lg:h-[20vh] rounded flex items-center justify-center"
+            >
+              <img
+                src={image}
+                alt={`Selected ${index + 1}`}
+                className="h-[20vh] w-[32vw] object-cover rounded-md"
+              />
+            </div>
+          ))
+        ) : (
+          <label
+            htmlFor="multipleImageInput"
+            className="border-dashed border-2 border-green-500 text-green-500 h-full w-full sm:w-[60vw] sm:h-[30vh] md:w-[40vw] md:h-[32vh] lg:w-[32vw] lg:h-[20vh] rounded flex items-center justify-center  cursor-pointer"
+          >
+            Drag and drop file or Browse file
+          </label>
+        )}
+      </div>
+
+      {/* Hidden file input */}
+      <input
+        type="file"
+        id="multipleImageInput"
+        onChange={handleImageChange}
+        multiple
+        className="hidden"
+      />
+    </div>
             </div>
             <div className="col-md-12 d-flex justify-content-end gap-3">
               <button
                 type="submit"
-                className="btn bg-[#A1CB46] text-white hover:bg-[#7e9f37] px-4 py-2 form-submit"
+                className="btn bg-primary  hover:bg-primary-dark px-4 py-2 form-submit"
+                style={{color:"white"}}
                 data-form-id="update-invoice-settings"
                 data-message="Want update this invoice settings?"
               >

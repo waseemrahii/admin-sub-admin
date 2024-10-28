@@ -11,6 +11,11 @@ import Shiping from "./Shiping/Shiping";
 import ShippingSettings from "./Shiping/Shiping";
 import BDeliverySettings from "./DeliverySettings/BDeliverySettings";
 import InvoiceSettings from "./Invioce";
+import MaintenanceCard from "./SystemMaintenance/SystemMaintenance";
+import OrderSettingsCard from "./Order/Orde";
+import PaymentOptions from "./Customers/Customers";
+import PaymentMethods from "./paymentMethods/PaymentMethods";
+
 
 const BusinessSetupShop = () => {
   const [activeSection, setActiveSection] = useState("General");
@@ -18,15 +23,16 @@ const BusinessSetupShop = () => {
   const renderSection = () => {
     switch (activeSection) {
       case "General":
-        return <ShippingSettings />;
+        return <MaintenanceCard/>
+        // return <ShippingSettings />;
       case "PaymentOptions":
-        return <CustomerSettings />;
+        return <PaymentMethods />;
       case "Products":
         return <PaymentOption />;
       case "PrioritySetup":
         return <Priority />;
       case "Orders":
-        return <PaymentOption />;
+        return <OrderSettingsCard />;
       case "Vendors":
         return <BussnessVendorSetup />;
       case "Customers":
@@ -79,129 +85,98 @@ const BusinessSetupShop = () => {
         </div>
       </div>
       <div className="inline-page-menu my-4">
-        <ul className="list-unstyled">
-          <li className={` ${activeSection === "General" ? "active" : ""}`}>
-            <button
-              className="btn-link"
-              onClick={() => setActiveSection("General")}
-            >
-              General
-            </button>
-          </li>
-          <li
-            className={`text-capitalize ${
-              activeSection === "PaymentOptions" ? "active" : ""
-            }`}
-          >
-            <button
-              className="btn-link"
-              onClick={() => setActiveSection("PaymentOptions")}
-            >
-              Payment options
-            </button>
-          </li>
-          <li className={` ${activeSection === "Products" ? "active" : ""}`}>
-            <button
-              className="btn-link"
-              onClick={() => setActiveSection("Products")}
-            >
-              Products
-            </button>
-          </li>
-          <li
-            className={`text-capitalize ${
-              activeSection === "PrioritySetup" ? "active" : ""
-            }`}
-          >
-            <button
-              className="btn-link"
-              onClick={() => setActiveSection("PrioritySetup")}
-            >
-              Priority setup
-            </button>
-          </li>
-          <li className={` ${activeSection === "Orders" ? "active" : ""}`}>
-            <button
-              className="btn-link"
-              onClick={() => setActiveSection("Orders")}
-            >
-              Orders
-            </button>
-          </li>
-          <li
-            className={`text-capitalize ${
-              activeSection === "Vendors" ? "active" : ""
-            }`}
-          >
-            <button
-              className="btn-link"
-              onClick={() => setActiveSection("Vendors")}
-            >
-              Vendors
-            </button>
-          </li>
-          <li
-            className={`text-capitalize ${
-              activeSection === "Customers" ? "active" : ""
-            }`}
-          >
-            <button
-              className="btn-link"
-              onClick={() => setActiveSection("Customers")}
-            >
-              Customers
-            </button>
-          </li>
-          <li
-            className={`text-capitalize ${
-              activeSection === "DeliveryMen" ? "active" : ""
-            }`}
-          >
-            <button
-              className="btn-link"
-              onClick={() => setActiveSection("DeliveryMen")}
-            >
-              Delivery men
-            </button>
-          </li>
-          <li
-            className={`text-capitalize ${
-              activeSection === "ShippingMethod" ? "active" : ""
-            }`}
-          >
-            <button
-              className="btn-link"
-              onClick={() => setActiveSection("ShippingMethod")}
-            >
-              Shipping Method
-            </button>
-          </li>
-          <li
-            className={`text-capitalize ${
-              activeSection === "DeliveryRestriction" ? "active" : ""
-            }`}
-          >
-            <button
-              className="btn-link"
-              onClick={() => setActiveSection("DeliveryRestriction")}
-            >
-              Delivery restriction
-            </button>
-          </li>
-          <li
-            className={`text-capitalize ${
-              activeSection === "Invoice" ? "active" : ""
-            }`}
-          >
-            <button
-              className="btn-link"
-              onClick={() => setActiveSection("Invoice")}
-            >
-              Invoice
-            </button>
-          </li>
-        </ul>
-      </div>
+  <ul className="list-unstyled flex gap-4 p-2 text-nowrap w-96 md:w-full overflow-x-scroll md:overflow-x-hidden scroll-smooth ">
+    <li className={`${activeSection === "General" ? "border-b-2 border-green-500" : ""}`}>
+      <button
+        className="btn-link"
+        onClick={() => setActiveSection("General")}
+      >
+        General
+      </button>
+    </li>
+    <li className={`text-capitalize ${activeSection === "PaymentOptions" ? "border-b-2 border-green-500" : ""}`}>
+      <button
+        className="btn-link"
+        onClick={() => setActiveSection("PaymentOptions")}
+      >
+        Payment options
+      </button>
+    </li>
+    <li className={`${activeSection === "Products" ? "border-b-2 border-green-500" : ""}`}>
+      <button
+        className="btn-link"
+        onClick={() => setActiveSection("Products")}
+      >
+        Products
+      </button>
+    </li>
+    <li className={`text-capitalize ${activeSection === "PrioritySetup" ? "border-b-2 border-green-500" : ""}`}>
+      <button
+        className="btn-link"
+        onClick={() => setActiveSection("PrioritySetup")}
+      >
+        Priority setup
+      </button>
+    </li>
+    <li className={`${activeSection === "Orders" ? "border-b-2 border-green-500" : ""}`}>
+      <button
+        className="btn-link"
+        onClick={() => setActiveSection("Orders")}
+      >
+        Orders
+      </button>
+    </li>
+    <li className={`text-capitalize ${activeSection === "Vendors" ? "border-b-2 border-green-500" : ""}`}>
+      <button
+        className="btn-link"
+        onClick={() => setActiveSection("Vendors")}
+      >
+        Vendors
+      </button>
+    </li>
+    <li className={`text-capitalize ${activeSection === "Customers" ? "border-b-2 border-green-500" : ""}`}>
+      <button
+        className="btn-link"
+        onClick={() => setActiveSection("Customers")}
+      >
+        Customers
+      </button>
+    </li>
+    <li className={`text-capitalize ${activeSection === "DeliveryMen" ? "border-b-2 border-green-500" : ""}`}>
+      <button
+        className="btn-link"
+        onClick={() => setActiveSection("DeliveryMen")}
+      >
+        Delivery men
+      </button>
+    </li>
+    <li className={`text-capitalize ${activeSection === "ShippingMethod" ? "border-b-2 border-green-500" : ""}`}>
+      <button
+        className="btn-link"
+        onClick={() => setActiveSection("ShippingMethod")}
+      >
+        Shipping Method
+      </button>
+    </li>
+    <li className={`text-capitalize ${activeSection === "DeliveryRestriction" ? "border-b-2 border-green-500" : ""}`}>
+      <button
+        className="btn-link"
+        onClick={() => setActiveSection("DeliveryRestriction")}
+      >
+        Delivery restriction
+      </button>
+    </li>
+    <li className={`text-capitalize ${activeSection === "Invoice" ? "border-b-2 border-green-500" : ""}`}>
+      <button
+        className="btn-link"
+        onClick={() => setActiveSection("Invoice")}
+      >
+        Invoice
+      </button>
+    </li>
+  </ul>
+</div>
+
       <div className="py-4">{renderSection()}</div>
     </div>
   );
