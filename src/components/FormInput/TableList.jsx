@@ -16,7 +16,7 @@ const TableList = memo(
     exportFileName = "listData",
     searchPlaceholder = "Search...",
     itemKey = "_id",
-    itemsPerPage = 1,
+    itemsPerPage = 7,
     imageSrc = "",
     headerActions,
   }) => {
