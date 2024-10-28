@@ -21,7 +21,7 @@ const OtpLoginSettings = () => {
           <div className="row">
             <div className="col-lg-4 col-sm-6">
               <div className="form-group">
-                <label className="input-label" htmlFor="maximum_otp_hit">
+                <label className="input-label flex items-center gap-1" htmlFor="maximum_otp_hit">
                   Maximum OTP hit{" "}
                   <FaInfoCircle
                     data-toggle="tooltip"
@@ -34,7 +34,7 @@ const OtpLoginSettings = () => {
                   min="0"
                   defaultValue="5"
                   name="maximum_otp_hit"
-                  className="form-control"
+                  className="form-control outline-none hover:border-primary"
                   placeholder="Ex: 5"
                   required
                 />
@@ -42,7 +42,7 @@ const OtpLoginSettings = () => {
             </div>
             <div className="col-lg-4 col-sm-6">
               <div className="form-group">
-                <label className="input-label" htmlFor="otp_resend_time">
+                <label className="input-label flex items-center gap-1" htmlFor="otp_resend_time">
                   OTP resend time <small>(Sec)</small>{" "}
                   <FaInfoCircle
                     data-toggle="tooltip"
@@ -56,7 +56,7 @@ const OtpLoginSettings = () => {
                   step="0.01"
                   defaultValue="30"
                   name="otp_resend_time"
-                  className="form-control"
+                  className="form-control outline-none hover:border-primary"
                   placeholder="Ex: 30"
                   required
                 />
@@ -64,7 +64,7 @@ const OtpLoginSettings = () => {
             </div>
             <div className="col-lg-4 col-sm-6">
               <div className="form-group">
-                <label className="input-label" htmlFor="temporary_block_time">
+                <label className="input-label flex items-center gap-1" htmlFor="temporary_block_time">
                   Temporary block time <small>(Sec)</small>{" "}
                   <FaInfoCircle
                     data-toggle="tooltip"
@@ -78,7 +78,7 @@ const OtpLoginSettings = () => {
                   step="0.01"
                   defaultValue="120"
                   name="temporary_block_time"
-                  className="form-control"
+                  className="form-control outline-none hover:border-primary"
                   placeholder="Ex: 120"
                   required
                 />
@@ -86,7 +86,7 @@ const OtpLoginSettings = () => {
             </div>
             <div className="col-lg-4 col-sm-6">
               <div className="form-group">
-                <label className="input-label" htmlFor="maximum_login_hit">
+                <label className="input-label flex items-center gap-1" htmlFor="maximum_login_hit">
                   Maximum Login hit{" "}
                   <FaInfoCircle
                     data-toggle="tooltip"
@@ -99,7 +99,7 @@ const OtpLoginSettings = () => {
                   min="0"
                   defaultValue="10"
                   name="maximum_login_hit"
-                  className="form-control"
+                  className="form-control outline-none hover:border-primary"
                   placeholder="Ex: 10"
                   required
                 />
@@ -108,7 +108,7 @@ const OtpLoginSettings = () => {
             <div className="col-lg-4 col-sm-6">
               <div className="form-group">
                 <label
-                  className="input-label"
+                  className="input-label flex items-center gap-1"
                   htmlFor="temporary_login_block_time"
                 >
                   Temporary login block time <small>(Sec)</small>{" "}
@@ -124,7 +124,7 @@ const OtpLoginSettings = () => {
                   step="0.01"
                   defaultValue="120"
                   name="temporary_login_block_time"
-                  className="form-control"
+                  className="form-control outline-none hover:border-primary"
                   placeholder="Ex: 120"
                   required
                 />
@@ -137,7 +137,8 @@ const OtpLoginSettings = () => {
             </button>
             <button
               type="button"
-              className="btn px-4 py-2 bg-[#A1CB46] text-white hover:bg-[#7e9f37]  call-demo"
+              className="btn px-4 py-2 bg-primary hover:bg-primary-dark  call-demo"
+              style={{color:"white"}}
             >
               Save
             </button>

@@ -28,21 +28,35 @@ const LoginSetups = () => {
       </div>
       {/* Top Navbar for sections */}
       <div className="inline-page-menu my-4">
-        <ul className="list-unstyled flex gap-3">
-          <li className={activeSection === "otpSetting" ? "active" : ""}>
-            <button onClick={() => handleSectionClick("otpSetting")}>
+      <ul className="list-unstyled flex gap-3">
+        <li>
+          <button
+            onClick={() => handleSectionClick("otpSetting")}
+            className={`${
+              activeSection === "otpSetting"
+                ? "border-b-2 border-green-500 "
+                : "text-gray-700"
+            } pb-2 font-medium`}
+          >
             OTP & Login Attempts
-            </button>
-          </li>
-          <li className={activeSection === "loginUrl" ? "active" : ""}>
-            <button onClick={() => handleSectionClick("loginUrl")}>
+          </button>
+        </li>
+        <li>
+          <button
+            onClick={() => handleSectionClick("loginUrl")}
+            className={`${
+              activeSection === "loginUrl"
+                ? "border-b-2 border-green-500 "
+                : "text-gray-700"
+            } pb-2 font-medium`}
+          >
             Login Url
-            </button>
-          </li>
-    
-          {/* Add more buttons for additional sections as needed */}
-        </ul>
-      </div>
+          </button>
+        </li>
+
+        {/* Add more buttons for additional sections as needed */}
+      </ul>
+    </div>
 
       {/* Conditional rendering of section content */}
       <div className="card">

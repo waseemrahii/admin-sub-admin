@@ -21,7 +21,7 @@ const AdminLoginPage = () => {
           </div>
           <div className="card-body style-a35LI" id="style-a35LI">
             <div className="mb-3">
-              <label className="form-label">
+              <label className="form-label flex items-center gap-1">
                 Admin login url
                 <span
                   className="input-label-secondary text--title"
@@ -38,7 +38,7 @@ const AdminLoginPage = () => {
                 </span>
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control outline-none hover:border-primary"
                   name="url"
                   defaultValue="admin"
                 />
@@ -54,7 +54,8 @@ const AdminLoginPage = () => {
               <button
                 type="submit"
                 id="submit"
-                className="btn py-2 bg-[#A1CB46] text-white hover:bg-[#7e9f37] px-4"
+                className="btn py-2 bg-primary text-white hover:bg-primary-dark px-4"
+                style={{color:"white"}}
               >
                 Submit
               </button>
@@ -78,7 +79,7 @@ const AdminLoginPage = () => {
           </div>
           <div className="card-body style-a35LI" id="style-a35LI">
             <div className="mb-3">
-              <label className="form-label">
+              <label className="form-label flex items-center gap-1">
                 Employee login url
                 <span
                   className="input-label-secondary text--title"
@@ -95,7 +96,7 @@ const AdminLoginPage = () => {
                 </span>
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control outline-none hover:border-primary"
                   name="url"
                   defaultValue="admin"
                 />
@@ -111,7 +112,8 @@ const AdminLoginPage = () => {
               <button
                 type="submit"
                 id="submit"
-                className="btn px-4 py-2 bg-[#A1CB46] text-white hover:bg-[#7e9f37] px-4"
+                className="btn  py-2 bg-primary text-white hover:bg-primary-dark px-4"
+                style={{color:"white"}}
               >
                 Submit
               </button>
